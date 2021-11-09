@@ -18,8 +18,8 @@
 #
 
 EFIINC          = /usr/include/efi
-GNUEFILIB       = /usr/lib
-EFILIB          = /usr/lib
+GNUEFILIB       = /usr/lib/gnuefi/x64
+EFILIB          = /usr/lib/gnuefi/x64
 EFICRT0         = /usr/lib
 
 # Below are good for compiling with Fedora on x86-64....
@@ -97,8 +97,8 @@ TIANO_INCLUDE_DIRS = -I $(TIANOBASE)/MdePkg \
 
 # for GNU-EFI....
 SUBSYSTEM_LDFLAG  =
-GNUEFI_LDSCRIPT   = $(EFICRT0)/elf_$(ARCH)_efi.lds
-CRTOBJS           = $(EFICRT0)/crt0-efi-$(ARCH).o
+GNUEFI_LDSCRIPT   = /usr/lib/gnuefi/x64/efi.lds
+CRTOBJS           = /usr/lib/gnuefi/x64/crt0.o
 GNUEFI_LDFLAGS    = -T $(GNUEFI_LDSCRIPT) -shared -Bsymbolic -nostdlib -L$(EFILIB) -L$(GNUEFILIB) $(CRTOBJS)
 GNUEFI_LIBS       = -lefi -lgnuefi $(shell $(CC) -print-libgcc-file-name)
 #LIBS            = -lefi -lgnuefi $(shell $(CC) $(ARCH3264) -print-libgcc-file-name)
