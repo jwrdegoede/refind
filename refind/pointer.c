@@ -191,6 +191,7 @@ EFI_STATUS pdUpdateState() {
     EFI_ABSOLUTE_POINTER_STATE APointerState;
     EFI_SIMPLE_POINTER_STATE SPointerState;
     BOOLEAN LastHolding = State.Holding;
+    BOOLEAN EventIsAbs = FALSE;
 
     UINTN Index;
     for(Index = 0; Index < NumAPointerDevices; Index++) {
@@ -207,6 +208,7 @@ EFI_STATUS pdUpdateState() {
             State.Y = (APointerState.CurrentY * UGAHeight) / APointerProtocol[Index]->Mode->AbsoluteMaxY;
 #endif
             State.Holding = (APointerState.ActiveButtons & EFI_ABSP_TouchActive);
+            EventIsAbs = TRUE;
         }
     }
     for(Index = 0; Index < NumSPointerDevices; Index++) {
@@ -246,7 +248,10 @@ EFI_STATUS pdUpdateState() {
         }
     }
 
-    State.Press = (LastHolding && !State.Holding);
+    if (1 && EventIsAbs)
+        State.Press = TRUE;
+    else
+        State.Press = (LastHolding && !State.Holding);
 
     return Status;
 #endif
